@@ -14,9 +14,12 @@ namespace NuGetGallery.OData.Serializers
     public class NuGetEntityTypeSerializer
         : ODataEntityTypeSerializer
     {
+        private readonly string _contentType;
+
         public NuGetEntityTypeSerializer(ODataSerializerProvider serializerProvider)
             : base(serializerProvider)
         {
+            _contentType = "application/zip";
         }
 
         public override ODataEntry CreateEntry(SelectExpandNode selectExpandNode, EntityInstanceContext entityInstanceContext)
@@ -77,10 +80,10 @@ namespace NuGetGallery.OData.Serializers
 
         public string ContentType
         {
-            get { return "application/zip"; }
+            get { return _contentType; }
         }
 
-        private Uri BuildLinkForStreamProperty(string routePrefix, string id, string version, HttpRequestMessage request)
+        private static Uri BuildLinkForStreamProperty(string routePrefix, string id, string version, HttpRequestMessage request)
         {
             var url = new UrlHelper(request);
             var result = url.Route(routePrefix + RouteName.DownloadPackage, new { id, version });

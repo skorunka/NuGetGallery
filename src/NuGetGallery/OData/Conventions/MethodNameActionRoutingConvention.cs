@@ -54,7 +54,7 @@ namespace NuGetGallery.OData.Conventions
             return null;
         }
 
-        private bool MatchHttpMethod(HttpActionDescriptor desc, HttpMethod method)
+        private static bool MatchHttpMethod(HttpActionDescriptor desc, HttpMethod method)
         {
             var supportedMethods = desc.ActionBinding.ActionDescriptor.SupportedHttpMethods;
             return supportedMethods.Contains(method);

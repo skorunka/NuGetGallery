@@ -4,17 +4,8 @@
 using System;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.OData.Batch;
-using System.Web.Http.OData.Builder;
-using System.Web.Http.OData.Extensions;
 using System.Web.Http.OData.Formatter;
 using System.Web.Http.OData.Formatter.Deserialization;
-using System.Web.Http.OData.Routing.Conventions;
-using Microsoft.Data.Edm;
-using Microsoft.Data.Edm.Csdl;
-using Microsoft.Data.OData;
-using NuGetGallery.OData.Conventions;
-using NuGetGallery.OData.Routing;
 using NuGetGallery.OData.Serializers;
 
 namespace NuGetGallery
@@ -29,15 +20,15 @@ namespace NuGetGallery
                 new DefaultODataDeserializerProvider());
 
             // Disable json and atomsvc - if these are ever needed, please reorder them so they are at the end of the collection. This will save you a few hours of debugging.
-            var reorderedFormatters = odataFormatters.Where(f => !f.SupportedMediaTypes.Any(m => m.MediaType == "application/atomsvc+xml" || m.MediaType.StartsWith("application/json")));
+            var reorderedFormatters = odataFormatters.Where(f => !f.SupportedMediaTypes.Any(m => m.MediaType == "application/atomsvc+xml" || m.MediaType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase)));
 
             config.Formatters.Clear();
             config.Formatters.InsertRange(0, reorderedFormatters);
             
             // Register feeds
             NuGetODataV1FeedConfig.Register(config);
-            NuGetODataV2FeedConfig.Register(config);
             NuGetODataV2CuratedFeedConfig.Register(config);
+            NuGetODataV2FeedConfig.Register(config);
 
             config.EnsureInitialized();
         }

@@ -11,6 +11,7 @@ using System.Web.Http.OData.Routing.Conventions;
 using Microsoft.Data.Edm;
 using Microsoft.Data.Edm.Csdl;
 using Microsoft.Data.OData;
+using NuGetGallery.OData;
 using NuGetGallery.OData.Conventions;
 using NuGetGallery.OData.Routing;
 
@@ -34,10 +35,12 @@ namespace NuGetGallery
             conventions = conventions.Select(c => new ControllerAliasingODataRoutingConvention(c, "Packages", "ODataV1Feed")).Cast<IODataRoutingConvention>().ToList();
 
             // Add OData routes
-            config.Routes.MapODataServiceRoute("api-vX1", "api/vX1/FeedService.svc", model, new CountODataPathHandler(), conventions, new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+            config.Routes.MapODataServiceRoute("api-v1-odata1", "api/v1/FeedService.svc", model, new CountODataPathHandler(), conventions, new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+            config.Routes.MapODataServiceRoute("api-v1-odata2", "api/v1", model, new CountODataPathHandler(), conventions, new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+            config.Routes.MapODataServiceRoute("api-v1-odata3", "v1/FeedService.svc", model, new CountODataPathHandler(), conventions, new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
         }
 
-        private static IEdmModel GetEdmModel()
+        public static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
 

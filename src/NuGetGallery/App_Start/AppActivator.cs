@@ -174,7 +174,6 @@ namespace NuGetGallery
         private static void AppPostStart(IAppConfiguration configuration)
         {
             Routes.RegisterRoutes(RouteTable.Routes, configuration.FeedOnlyMode);
-            Routes.RegisterServiceRoutes(RouteTable.Routes);
             AreaRegistration.RegisterAllAreas();
 
             GlobalFilters.Filters.Add(new SendErrorsToTelemetryAttribute { View = "~/Views/Errors/InternalError.cshtml" });

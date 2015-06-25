@@ -80,11 +80,11 @@ namespace NuGetGallery.Controllers
 
             var packages = _packagesRepository.GetAll()
                 .Include(p => p.PackageRegistration)
-                .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+                .Where(p => p.PackageRegistration.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && !p.IsPrerelease);
 
             if (!string.IsNullOrEmpty(version))
             {
-                packages = packages.Where(p => !p.IsPrerelease && p.Version == version); // todo: normalizedversion?
+                packages = packages.Where(p => p.Version == version); // todo: normalizedversion?
             }
 
             if (_configurationService.Features.PackageRestoreViaSearch)

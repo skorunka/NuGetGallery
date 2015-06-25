@@ -11,6 +11,7 @@ using System.Web.Http.OData.Routing.Conventions;
 using Microsoft.Data.Edm;
 using Microsoft.Data.Edm.Csdl;
 using Microsoft.Data.OData;
+using NuGetGallery.OData;
 using NuGetGallery.OData.Conventions;
 using NuGetGallery.OData.Routing;
 
@@ -34,10 +35,10 @@ namespace NuGetGallery
             conventions = conventions.Select(c => new ControllerAliasingODataRoutingConvention(c, "Packages", "ODataV2CuratedFeed")).Cast<IODataRoutingConvention>().ToList();
 
             // Add OData routes
-            config.Routes.MapODataServiceRoute("api-vXCurated", "api/vX/curated-feeds/{curatedFeedName}", model, new CountODataPathHandler(), conventions, new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+            config.Routes.MapODataServiceRoute("api-v2curated-odata", "api/v2/curated-feeds/{curatedFeedName}", model, new CountODataPathHandler(), conventions, new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
         }
 
-        private static IEdmModel GetEdmModel()
+        public static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
 

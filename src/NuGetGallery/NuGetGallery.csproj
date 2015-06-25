@@ -489,9 +489,8 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
-    <Compile Include="DataServices\NormalizeVersionInterceptor.cs" />
-    <Compile Include="DataServices\RewriteBaseUrlMessageInspector.cs" />
-    <Compile Include="DataServices\SearchHijacker.cs" />
+    <Compile Include="OData\QueryInterceptors\NormalizeVersionInterceptor.cs" />
+    <Compile Include="OData\SearchService\SearchHijacker.cs" />
     <Compile Include="Diagnostics\AuthenticationGlimpseTab.cs" />
     <Compile Include="Diagnostics\ConcurrentInMemoryPersistenceStore.cs" />
     <Compile Include="Diagnostics\DiagnosticsGlimpseTab.cs" />
@@ -742,34 +741,19 @@
     <Compile Include="Controllers\CuratedFeedsController.cs" />
     <Compile Include="Controllers\CuratedPackagesController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
-    <Compile Include="DataServices\ODataRemoveVersionSorter.cs" />
-    <Compile Include="DataServices\CountInterceptor.cs">
+    <Compile Include="OData\QueryInterceptors\ODataRemoveVersionSorter.cs" />
+    <Compile Include="OData\QueryInterceptors\CountInterceptor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataServices\DisregardODataInterceptor.cs" />
-    <Compile Include="DataServices\SearchAdaptor.cs" />
-    <Compile Include="DataServices\V2CuratedFeed.svc.cs">
-      <DependentUpon>V2CuratedFeed.svc</DependentUpon>
-    </Compile>
-    <Compile Include="DataServices\V1FeedPackage.cs">
+    <Compile Include="OData\QueryInterceptors\DisregardODataInterceptor.cs" />
+    <Compile Include="OData\SearchService\SearchAdaptor.cs" />
+    <Compile Include="OData\V1FeedPackage.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataServices\V1Feed.svc.cs">
-      <DependentUpon>V1Feed.svc</DependentUpon>
+    <Compile Include="OData\PackageExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataServices\FeedContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataServices\FeedServiceBase.cs" />
-    <Compile Include="DataServices\PackageExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataServices\V2Feed.svc.cs">
-      <DependentUpon>V2Feed.svc</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataServices\V2FeedPackage.cs">
+    <Compile Include="OData\V2FeedPackage.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Diagnostics\DiagnosticsNinjectModule.cs" />
@@ -1352,9 +1336,6 @@
     <Content Include="Content\themes\custom\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\themes\custom\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="D3 LICENSE.txt" />
-    <Content Include="DataServices\V2CuratedFeed.svc" />
-    <Content Include="DataServices\V1Feed.svc" />
-    <Content Include="DataServices\V2Feed.svc" />
     <Content Include="Public\Error.html" />
     <Content Include="Public\favicon.ico" />
     <EmbeddedResource Include="Infrastructure\Elmah.SqlServer.sql" />

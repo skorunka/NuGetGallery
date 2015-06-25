@@ -15,8 +15,8 @@ using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using NuGet;
 using NuGetGallery.Configuration;
-using NuGetGallery.DataServices;
 using NuGetGallery.OData;
+using NuGetGallery.OData.QueryInterceptors;
 using QueryInterceptor;
 
 // ReSharper disable once CheckNamespace

@@ -1,5 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,10 @@ using System.Web;
 using System.Web.Http.OData.Query;
 using System.Web.Routing;
 using NuGet.Services.Search.Models;
+using NuGetGallery.OData.QueryInterceptors;
 using QueryInterceptor;
 
-namespace NuGetGallery
+namespace NuGetGallery.OData
 {
     public static class SearchAdaptor
     {
@@ -356,7 +358,7 @@ namespace NuGetGallery
             var queryString = queryBuilder.ToString().TrimEnd('&');
             if (generateSkipToken)
             {
-                queryString += string.Format("&$skiptoken='{0}','{1}',{2}", packageId, packageVersion, skipCount);
+                queryString += string.Format(CultureInfo.CurrentCulture, "&$skiptoken='{0}','{1}',{2}", packageId, packageVersion, skipCount);
             }
 
             var builder = new UriBuilder(currentRequestUri);

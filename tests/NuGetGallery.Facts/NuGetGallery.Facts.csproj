@@ -160,8 +160,8 @@
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Primitives">
@@ -178,8 +178,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.OData.5.5.1\lib\net45\System.Web.Http.OData.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -244,9 +248,8 @@
     <Compile Include="Controllers\PackagesControllerFacts.cs" />
     <Compile Include="Controllers\StatisticsControllerFacts.cs" />
     <Compile Include="Controllers\UsersControllerFacts.cs" />
-    <Compile Include="DataServices\NormalizeVersionInterceptorFacts.cs" />
-    <Compile Include="DataServices\PackageExtensionsFacts.cs" />
-    <Compile Include="DataServices\RewriteBaseUrlMessageInspectorFacts.cs" />
+    <Compile Include="OData\Interceptors\NormalizeVersionInterceptorFacts.cs" />
+    <Compile Include="OData\Interceptors\PackageExtensionsFacts.cs" />
     <Compile Include="Diagnostics\DiagnosticsServiceFacts.cs" />
     <Compile Include="Diagnostics\GlimpseRuntimePolicyFacts.cs" />
     <Compile Include="EmailValidationRegex.cs" />
@@ -292,6 +295,7 @@
     <Compile Include="TestUtils\FakeEntitiesContext.cs" />
     <Compile Include="TestUtils\MockExtensions.cs" />
     <Compile Include="TestUtils\ModelStateAssert.cs" />
+    <Compile Include="TestUtils\HttpActionResultExtensions.cs" />
     <Compile Include="TestUtils\OwinAssert.cs" />
     <Compile Include="TestUtils\OwinTestExtensions.cs" />
     <Compile Include="TestUtils\ResultAssert.cs" />
