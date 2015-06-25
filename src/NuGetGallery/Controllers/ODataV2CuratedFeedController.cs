@@ -3,17 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Services;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
-using NuGet;
 using NuGetGallery.Configuration;
 using NuGetGallery.OData;
 using NuGetGallery.OData.QueryInterceptors;
@@ -26,7 +22,6 @@ namespace NuGetGallery.Controllers
         : NuGetODataController
     {
         private readonly IEntitiesContext _entities;
-        private readonly IEntityRepository<Package> _packagesRepository;
         private readonly ConfigurationService _configurationService;
         private readonly ISearchService _searchService;
         private readonly ICuratedFeedService _curatedFeedService;
@@ -37,11 +32,10 @@ namespace NuGetGallery.Controllers
              EnsureStableOrdering = true
         };
 
-        public ODataV2CuratedFeedController(IEntitiesContext entities, IEntityRepository<Package> packagesRepository, ConfigurationService configurationService, ISearchService searchService, ICuratedFeedService curatedFeedService)
+        public ODataV2CuratedFeedController(IEntitiesContext entities, ConfigurationService configurationService, ISearchService searchService, ICuratedFeedService curatedFeedService)
             : base(configurationService)
         {
             _entities = entities;
-            _packagesRepository = packagesRepository;
             _configurationService = configurationService;
             _searchService = searchService;
             _curatedFeedService = curatedFeedService;
