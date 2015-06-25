@@ -18,6 +18,7 @@ namespace NuGetGallery
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             var method = node.Method;
+
             if ((method.DeclaringType == typeof(Queryable)) && method.Name.Equals("LongCount", StringComparison.Ordinal))
             {
                 return Expression.Constant(_count);

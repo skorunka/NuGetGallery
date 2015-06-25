@@ -78,12 +78,6 @@ namespace NuGetGallery
             return curatedFeedName;
         }
 
-        private IQueryable<Package> GetPackages()
-        {
-            var curatedFeedName = GetCuratedFeedName();
-            return _curatedFeedService.GetPackages(curatedFeedName);
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "targetFramework", Justification = "We can't change it because it's now part of the contract of this service method.")]
         [WebGet]
         public IQueryable<V2FeedPackage> Search(string searchTerm, string targetFramework, bool includePrerelease)
