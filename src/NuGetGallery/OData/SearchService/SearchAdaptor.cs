@@ -138,20 +138,13 @@ namespace NuGetGallery.OData
                 return false;
             }
 
+            string path = string.Empty;
+            string query = string.Empty;
             int indexOfQuestionMark = url.IndexOf('?');
-            if (indexOfQuestionMark == -1)
+            if (indexOfQuestionMark > -1)
             {
-                searchFilter = null;
-                return false;
-            }
-
-            string path = url.Substring(0, indexOfQuestionMark);
-            string query = url.Substring(indexOfQuestionMark + 1);
-
-            if (string.IsNullOrEmpty(query))
-            {
-                searchFilter = null;
-                return false;
+                path = url.Substring(0, indexOfQuestionMark);
+                query = url.Substring(indexOfQuestionMark + 1);
             }
 
             searchFilter = new SearchFilter(SearchFilter.ODataSearchContext)
@@ -177,9 +170,7 @@ namespace NuGetGallery.OData
                 }
             }
 
-            // We'll only use the index if we the query searches for latest \ latest-stable packages
-
-            
+            // We'll only use the index if we the query searches for latest / latest-stable packages
             string filter;
             if (queryTerms.TryGetValue("$filter", out filter))
             {

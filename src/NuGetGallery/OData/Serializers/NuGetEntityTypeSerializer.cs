@@ -38,13 +38,21 @@ namespace NuGetGallery.OData.Serializers
             if (instance != null)
             {
                 // Set Atom entry metadata
-                entry.SetAnnotation(new AtomEntryMetadata()
+                var atomEntryMetadata = new AtomEntryMetadata();
+                atomEntryMetadata.Title = instance.Id;
+                if (!string.IsNullOrEmpty(instance.Authors))
                 {
-                    Title = instance.Id,
-                    Authors = new[] { new AtomPersonMetadata { Name = instance.Authors } },
-                    Updated = instance.LastUpdated,
-                    Summary = instance.Summary
-                });
+                    atomEntryMetadata.Authors = new[] { new AtomPersonMetadata { Name = instance.Authors } };
+                }
+                if (instance.LastUpdated > DateTime.MinValue)
+                {
+                    atomEntryMetadata.Updated = instance.LastUpdated;
+                }
+                if (!string.IsNullOrEmpty(instance.Summary))
+                {
+                    atomEntryMetadata.Summary = instance.Summary;
+                }
+                entry.SetAnnotation(atomEntryMetadata);
 
                 // Add package download link
                 entry.MediaResource = new ODataStreamReferenceValue
@@ -61,13 +69,21 @@ namespace NuGetGallery.OData.Serializers
             if (instance != null)
             {
                 // Set Atom entry metadata
-                entry.SetAnnotation(new AtomEntryMetadata()
+                var atomEntryMetadata = new AtomEntryMetadata();
+                atomEntryMetadata.Title = instance.Id;
+                if (!string.IsNullOrEmpty(instance.Authors))
                 {
-                    Title = instance.Id,
-                    Authors = new[] { new AtomPersonMetadata { Name = instance.Authors } },
-                    Updated = instance.LastUpdated,
-                    Summary = instance.Summary
-                });
+                    atomEntryMetadata.Authors = new[] { new AtomPersonMetadata { Name = instance.Authors } };
+                }
+                if (instance.LastUpdated > DateTime.MinValue)
+                {
+                    atomEntryMetadata.Updated = instance.LastUpdated;
+                }
+                if (!string.IsNullOrEmpty(instance.Summary))
+                {
+                    atomEntryMetadata.Summary = instance.Summary;
+                }
+                entry.SetAnnotation(atomEntryMetadata);
 
                 // Add package download link
                 entry.MediaResource = new ODataStreamReferenceValue

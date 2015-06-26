@@ -106,7 +106,7 @@ namespace NuGetGallery.Controllers
         }
 
         [HttpGet, HttpPost]
-        public async Task<IEnumerable<V1FeedPackage>> Search([FromODataUri]string searchTerm, [FromODataUri]string targetFramework, ODataQueryOptions<V1FeedPackage> queryOptions)
+        public async Task<IEnumerable<V1FeedPackage>> Search(ODataQueryOptions<V1FeedPackage> queryOptions, [FromODataUri]string searchTerm = "", [FromODataUri]string targetFramework = "")
         {
             // Ensure we can provide paging
             var pageSize = queryOptions.Top != null ? (int?)null : SearchAdaptor.MaxPageSize;
@@ -139,7 +139,12 @@ namespace NuGetGallery.Controllers
             var query = await SearchAdaptor.SearchCore(_searchService, GetTraditionalHttpContext().Request, packages, searchTerm, targetFramework, false, curatedFeed: null);
 
             var totalHits = query.LongCount();
-            var convertedQuery = query.ToV1FeedPackageQuery(GetSiteRoot());
+            var convertedQuery = query
+                .ToV1FeedPackageQuery(GetSiteRoot());
+
+            // apply OData query options + limit total of entries explicitly
+            convertedQuery = (IQueryable<V1FeedPackage>)queryOptions.ApplyTo(
+                convertedQuery.Take(pageSize ?? SearchAdaptor.MaxPageSize)); 
 
             var nextLink = SearchAdaptor.GetNextLink(Request.RequestUri, convertedQuery, new { searchTerm, targetFramework }, queryOptions, settings, false);
 
@@ -147,9 +152,9 @@ namespace NuGetGallery.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> SearchCount([FromODataUri] string searchTerm, [FromODataUri] string targetFramework, ODataQueryOptions<V1FeedPackage> queryOptions)
+        public async Task<HttpResponseMessage> SearchCount(ODataQueryOptions<V1FeedPackage> queryOptions, [FromODataUri] string searchTerm = "", [FromODataUri] string targetFramework = "")
         {
-            var queryResults = await Search(searchTerm, targetFramework, queryOptions);
+            var queryResults = await Search(queryOptions, searchTerm, targetFramework);
 
             var pageResult = queryResults as PageResult;
             if (pageResult != null && pageResult.Count.HasValue)

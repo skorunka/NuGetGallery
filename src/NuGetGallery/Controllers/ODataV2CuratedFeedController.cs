@@ -118,7 +118,7 @@ namespace NuGetGallery.Controllers
         }
 
         [HttpGet, HttpPost]
-        public async Task<IEnumerable<V2FeedPackage>> Search(string curatedFeedName, [FromODataUri]string searchTerm, [FromODataUri]string targetFramework, [FromODataUri]bool includePrerelease, ODataQueryOptions<V2FeedPackage> queryOptions)
+        public async Task<IEnumerable<V2FeedPackage>> Search(string curatedFeedName, ODataQueryOptions<V2FeedPackage> queryOptions, [FromODataUri] string searchTerm = "", [FromODataUri] string targetFramework = "", [FromODataUri] bool includePrerelease = false)
         {
             if (!_entities.CuratedFeeds.Any(cf => cf.Name == curatedFeedName))
             {
@@ -154,7 +154,12 @@ namespace NuGetGallery.Controllers
             var query = await SearchAdaptor.SearchCore(_searchService, GetTraditionalHttpContext().Request, packages, searchTerm, targetFramework, includePrerelease, curatedFeed: curatedFeed);
 
             var totalHits = query.LongCount();
-            var convertedQuery = query.ToV2FeedPackageQuery(GetSiteRoot(), _configurationService.Features.FriendlyLicenses);
+            var convertedQuery = query
+                .ToV2FeedPackageQuery(GetSiteRoot(), _configurationService.Features.FriendlyLicenses);
+
+            // apply OData query options + limit total of entries explicitly
+            convertedQuery = (IQueryable<V2FeedPackage>)queryOptions.ApplyTo(
+                convertedQuery.Take(pageSize ?? SearchAdaptor.MaxPageSize)); 
 
             var nextLink = SearchAdaptor.GetNextLink(Request.RequestUri, convertedQuery, new { searchTerm, targetFramework, includePrerelease }, queryOptions, settings, false);
 
@@ -162,14 +167,14 @@ namespace NuGetGallery.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> SearchCount(string curatedFeedName, [FromODataUri] string searchTerm, [FromODataUri] string targetFramework, [FromODataUri] bool includePrerelease, ODataQueryOptions<V2FeedPackage> queryOptions)
+        public async Task<HttpResponseMessage> SearchCount(string curatedFeedName, ODataQueryOptions<V2FeedPackage> queryOptions, [FromODataUri] string searchTerm = "", [FromODataUri] string targetFramework = "", [FromODataUri] bool includePrerelease = false)
         {
             if (!_entities.CuratedFeeds.Any(cf => cf.Name == curatedFeedName))
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            var queryResults = await Search(curatedFeedName, searchTerm, targetFramework, includePrerelease, queryOptions);
+            var queryResults = await Search(curatedFeedName, queryOptions, searchTerm, targetFramework, includePrerelease);
 
             var pageResult = queryResults as PageResult;
             if (pageResult != null && pageResult.Count.HasValue)
