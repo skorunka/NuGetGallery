@@ -98,7 +98,7 @@ namespace NuGetGallery
                     v1Service.Request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:8081/");
 
                     // Act
-                    var result = await v1Service.Search(null, null, new ODataQueryOptions<V1FeedPackage>(new ODataQueryContext(NuGetODataV1FeedConfig.GetEdmModel(), typeof(V1FeedPackage)), v1Service.Request));
+                    var result = await v1Service.Search(new ODataQueryOptions<V1FeedPackage>(new ODataQueryContext(NuGetODataV1FeedConfig.GetEdmModel(), typeof(V1FeedPackage)), v1Service.Request), null, null);
 
                     // Assert
                     Assert.Equal(1, result.Count());
