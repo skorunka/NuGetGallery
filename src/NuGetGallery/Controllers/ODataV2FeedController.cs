@@ -108,7 +108,7 @@ namespace NuGetGallery.Controllers
             }
 
             var query = packages.ToV2FeedPackageQuery(GetSiteRoot(), _configurationService.Features.FriendlyLicenses);
-            return DataResult(query);
+            return Ok(query);
         }
 
         [HttpGet, HttpPost]

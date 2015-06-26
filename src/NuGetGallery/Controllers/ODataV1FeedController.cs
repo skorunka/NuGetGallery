@@ -102,7 +102,7 @@ namespace NuGetGallery.Controllers
             }
 
             var query = packages.ToV1FeedPackageQuery(GetSiteRoot());
-            return DataResult(query);
+            return Ok(query);
         }
 
         [HttpGet, HttpPost]

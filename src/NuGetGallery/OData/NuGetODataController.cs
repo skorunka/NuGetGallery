@@ -57,15 +57,5 @@ namespace NuGetGallery.OData
                 Content = new StringContent(count.ToString(CultureInfo.InvariantCulture), Encoding.UTF8, "text/plain")
             };
         }
-
-        protected virtual IHttpActionResult DataResult<T>(IQueryable<T> data)
-        {
-            if (!data.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(data);
-        }
     }
 }
