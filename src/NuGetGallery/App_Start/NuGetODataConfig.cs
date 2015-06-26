@@ -12,6 +12,8 @@ namespace NuGetGallery
 {
     public static class NuGetODataConfig
     {
+        public const int SearchCacheTime = 30;
+
         public static void Register(HttpConfiguration config)
         {
             // Add OData formatters (application/atom+xml)

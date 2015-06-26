@@ -12,6 +12,7 @@ using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using NuGetGallery.Configuration;
 using NuGetGallery.OData;
+using WebApi.OutputCache.V2;
 
 // ReSharper disable once CheckNamespace
 namespace NuGetGallery.Controllers
@@ -105,7 +106,7 @@ namespace NuGetGallery.Controllers
             return Ok(query);
         }
 
-        [HttpGet, HttpPost]
+        [HttpGet, HttpPost, CacheOutput(ServerTimeSpan = NuGetODataConfig.SearchCacheTime)]
         public async Task<IEnumerable<V1FeedPackage>> Search(ODataQueryOptions<V1FeedPackage> queryOptions, [FromODataUri]string searchTerm = "", [FromODataUri]string targetFramework = "")
         {
             // Ensure we can provide paging
@@ -151,7 +152,7 @@ namespace NuGetGallery.Controllers
             return new PageResult<V1FeedPackage>(convertedQuery, nextLink, totalHits);
         }
 
-        [HttpGet]
+        [HttpGet, CacheOutput(ServerTimeSpan = NuGetODataConfig.SearchCacheTime)]
         public async Task<HttpResponseMessage> SearchCount(ODataQueryOptions<V1FeedPackage> queryOptions, [FromODataUri] string searchTerm = "", [FromODataUri] string targetFramework = "")
         {
             var queryResults = await Search(queryOptions, searchTerm, targetFramework);

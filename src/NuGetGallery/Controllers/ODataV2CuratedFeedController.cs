@@ -14,6 +14,7 @@ using NuGetGallery.Configuration;
 using NuGetGallery.OData;
 using NuGetGallery.OData.QueryInterceptors;
 using QueryInterceptor;
+using WebApi.OutputCache.V2;
 
 // ReSharper disable once CheckNamespace
 namespace NuGetGallery.Controllers
@@ -117,7 +118,7 @@ namespace NuGetGallery.Controllers
             return Ok(query);
         }
 
-        [HttpGet, HttpPost]
+        [HttpGet, HttpPost, CacheOutput(ServerTimeSpan = NuGetODataConfig.SearchCacheTime)]
         public async Task<IEnumerable<V2FeedPackage>> Search(string curatedFeedName, ODataQueryOptions<V2FeedPackage> queryOptions, [FromODataUri] string searchTerm = "", [FromODataUri] string targetFramework = "", [FromODataUri] bool includePrerelease = false)
         {
             if (!_entities.CuratedFeeds.Any(cf => cf.Name == curatedFeedName))
@@ -166,7 +167,7 @@ namespace NuGetGallery.Controllers
             return new PageResult<V2FeedPackage>(convertedQuery, nextLink, totalHits);
         }
 
-        [HttpGet]
+        [HttpGet, CacheOutput(ServerTimeSpan = NuGetODataConfig.SearchCacheTime)]
         public async Task<HttpResponseMessage> SearchCount(string curatedFeedName, ODataQueryOptions<V2FeedPackage> queryOptions, [FromODataUri] string searchTerm = "", [FromODataUri] string targetFramework = "", [FromODataUri] bool includePrerelease = false)
         {
             if (!_entities.CuratedFeeds.Any(cf => cf.Name == curatedFeedName))
